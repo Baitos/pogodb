@@ -142,7 +142,8 @@ void delete_from_gym_list(gym_list **list, gym_list *node) { // delete from gym_
     if (node->prev != NULL) {
         //cout << "list = node prev not null\n";
         node->prev->next = node->next;
-    } 
+    }
+    delete(node); 
     write_gyms_to_file(*list);
 }
 
