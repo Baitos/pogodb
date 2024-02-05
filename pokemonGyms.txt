@@ -1,3 +1,3 @@
-Test,Chicago,-1,1
-Gym,New York,2,0
 Gold,Orlando,1,1
+Gym,New York,2,0
+Test,Chicago,-1,1

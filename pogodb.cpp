@@ -81,7 +81,7 @@ void write_gyms_to_file(gym_list *list) { // reprint file to accomodate for addi
     gym_list *temp = list;
     ofstream file("pokemonGyms.txt", ios::trunc); 
     if (!file.is_open()) {
-        cout << "Error: Unable to open gyms txt file. Might be some problems there.\n";
+        cout << "Error: Unable to open gyms txt file to write. Might be some problems there.\n";
     } else {
         while (list != NULL) {
             file << list->name << "," << list->location << "," << list->number << "," << list->exists << '\n';
@@ -216,6 +216,9 @@ void gold_gym_database() {
     gym_list *list;// = initialize_gym_list();
     while (1) {
         list = initialize_gym_list(); // a necessary evil for the case where you change the head i could prob fix but idk
+        if (list == NULL) { // in case the file doesn't exist
+            break;
+        }
         cout << "Gold Gym Database:\n";
         cout << "1. View Gold Gyms\n";
         cout << "2. Add Gold Gyms\n";
