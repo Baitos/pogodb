@@ -279,7 +279,7 @@ void gold_gym_database() {
                     gym += ",";
                 }
                 count = 0;
-                for (int i = 0; gym[i]; i++) {
+                for (int i = 0; gym[i]; i++) { // remove spaces so tokens can be obtained
                     if (!(gym[i] == ' ' && i > 0 && gym[i - 1] == ',')) {
                         gym[count++] = gym[i]; 
                     }
@@ -315,6 +315,7 @@ void gold_gym_database() {
                 }               
                 if ((new_gym->name == "") || (new_gym->location == "")) {
                     cout << "Please enter valid gym input!\n";
+                    delete(new_gym);
                     cin.clear();
                 } else {
                     cout << "Is this correct? (Y): " << new_gym->name << ", " << new_gym->location << ", ";
@@ -332,6 +333,8 @@ void gold_gym_database() {
                     if ((yesOrNo == "Y") || (yesOrNo == "y")) { 
                         //cout << "add\n";
                         add_to_gym_list(&list, new_gym);
+                    } else {
+                        delete(new_gym);
                     }
                     cin.clear();
                 }
