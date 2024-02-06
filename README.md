@@ -7,7 +7,7 @@ Name: Gym Name
 
 Location: Gym Location (by City/Town but could technically be anything)
 
-Number: The position in your list (this is my 100th gold gym!) I will add an option to not include this eventually
+Number: The position in your list (this is my 100th gold gym!)
 
 Y/N: Whether or not the gym still exists
 
