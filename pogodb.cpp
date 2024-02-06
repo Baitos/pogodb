@@ -28,20 +28,40 @@ struct xl_candy_list {
     struct xl_candy_list *alt; // alternate forms, (alola, galar, etc.)
 };
 
-gym_list* make_node_from_string(string line) {
-    gym_list *list = new gym_list();
+gym_list* make_node_from_string(string line) { // given a line, populates a node and returns it (like a constructor kinda)
+    gym_list *gym = new gym_list();
     istringstream iss(line); 
     string token;
     for (int i = 0; i < 4; ++i) {
         getline(iss, token, ',');
         switch(i) {
-            case 0: list->name = token; break;
-            case 1: list->location = token; break;
-            case 2: list->number = stoi(token); break;
-            case 3: list->exists = stoi(token); break;
+            case 0: 
+                gym->name = token; 
+                break;
+            case 1: 
+                gym->location = token; 
+                break;
+            case 2: 
+                try {
+                    gym->number = stoi(token);
+                    if (gym->number <= 0) {
+                        gym->number = -1;
+                    }
+                } catch (invalid_argument a) {
+                    gym->number = -1;
+                }
+                break;
+            case 3: 
+                token = token.substr(0, 1);               
+                if ((token == "n") || (token == "N") || (token == "0")) {
+                    gym->exists = 0;
+                } else {
+                    gym->exists = 1;
+                } 
+                break;
         }
     }
-    return list;
+    return gym;
 }
 
 gym_list* initialize_gym_list() {
@@ -286,33 +306,7 @@ void gold_gym_database() {
                 }
                 gym[count] = '\0';
 
-                gym_list *new_gym = new gym_list(); // here i go doing this shit again
-                string token;
-                istringstream iss(gym);
-                //cout << gym;  
-                getline(iss, token, ','); // NAME
-                new_gym->name = token;
-
-                getline(iss, token, ','); // LOCATION
-                new_gym->location = token;
-                //cout << "location = " << token << "fjkbfjhbfs\n";
-                getline(iss, token, ','); // NUMBER
-                try {
-                    new_gym->number = stoi(token);
-                    if (new_gym->number <= 0) {
-                        new_gym->number = -1;
-                    }                                         
-                } catch (invalid_argument a) {
-                    new_gym->number = -1;
-                }
-                getline(iss, token, ','); // EXISTENCE
-                token = token.substr(0, 1);
-                //cout << "y/n = " << token << '\n';                
-                if ((token == "n") || (token == "N") || (token == "0")) {
-                    new_gym->exists = 0;
-                } else {
-                    new_gym->exists = 1;
-                }               
+                gym_list *new_gym = make_node_from_string(gym);
                 if ((new_gym->name == "") || (new_gym->location == "")) {
                     cout << "Please enter valid gym input!\n";
                     delete(new_gym);
@@ -331,7 +325,6 @@ void gold_gym_database() {
                     }
                     getline(cin, yesOrNo);
                     if ((yesOrNo == "Y") || (yesOrNo == "y")) { 
-                        //cout << "add\n";
                         add_to_gym_list(&list, new_gym);
                     } else {
                         delete(new_gym);
