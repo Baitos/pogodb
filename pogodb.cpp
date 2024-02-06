@@ -91,7 +91,7 @@ gym_list* initialize_gym_list() {
         }
     }
     else {
-        cout << "Unable to open Gyms file\n";
+        ofstream file("pokemonGyms.txt"); 
     }
     file.close();
     return temp;
@@ -237,9 +237,9 @@ void gold_gym_database() {
     gym_list *list;// = initialize_gym_list();
     while (1) {
         list = initialize_gym_list(); // a necessary evil for the case where you change the head i could prob fix but idk
-        if (list == NULL) { // in case the file doesn't exist
+        /*if (list == NULL) { // in case the file doesn't exist
             break;
-        }
+        }*/
         cout << "Gold Gym Database:\n";
         cout << "1. View Gold Gyms\n";
         cout << "2. Add Gold Gyms\n";
